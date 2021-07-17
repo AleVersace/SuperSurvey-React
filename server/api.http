@@ -1,0 +1,61 @@
+@server = http://localhost:3001
+
+##### Perform login (correctly)
+POST {{server}}/api/sessions
+Content-Type: application/json
+
+{
+    "username": "alessandro.versace@polito.it", 
+    "password": "SecurePassword"
+}
+
+##### Wrong login
+POST {{server}}/api/sessions
+Content-Type: application/json
+
+{
+    "username": "alessandro.versace@polito.it", 
+    "password": "wrong"
+}
+
+##### Check if already logged in
+GET {{server}}/api/sessions/current 
+
+##### Logout
+DELETE {{server}}/api/sessions/current
+
+##### Retrieve all opened surveys overview info
+GET {{server}}/api/surveys
+
+##### Retrieve all user specific opened surveys
+GET {{server}}/api/surveys/user
+
+##### Retrieve a survey by its id
+GET {{server}}/api/surveys/1
+
+##### Retrieve all survey's questions by its survey id
+GET {{server}}/api/surveys/1/questions
+
+##### Retrieve all question's choices by survey id and question id
+GET {{server}}/api/surveys/1/questions/2/choices
+
+##### Retrieve the username of a survey reply given surveyId and replyId
+GET {{server}}/api/surveys/1/replies/1/username
+
+##### Retrieve replies of a CLOSED question given surveyId, replyId, questionId
+GET {{server}}/api/surveys/1/replies/1/questions/2/closed
+
+##### Retrieve replies of a OPEN question given surveyId, replyId, questionId (requires auth) 
+GET {{server}}/api/surveys/1/replies/1/questions/1
+
+##### Save a brand new survey (requires auth)
+POST {{server}}/api/surveys/user/new-survey
+Content-Type: application/json
+
+{"id":0,"title":"Useless Survey","nQuestions":4,"questionsList":[{"questionId":1,"title":"Tell me anything","open":true,"min":1,"reply":""},{"questionId":2,"title":"Are you sure you've told me anything?","open":false,"min":1,"max":2,"answers":["Yes","No","Maybe","Not Sure","Mmmh..."],"reply":[]},{"questionId":4,"title":"Ok now tell me if you're ok to tell me anything","open":false,"min":1,"max":1,"answers":["Yes I am","No I don't know you"],"reply":[]},{"questionId":5,"title":"Your opinion about this survey","open":true,"min":1,"reply":""}],"replyId":-1,"username":""}
+
+##### Send a new reply to a specific survey
+POST {{server}}/api/surveys/new-reply HTTP/1.1
+Content-Type: application/json
+
+{"id":2,"title":"Music and you","nQuestions":3,"questionsList":[{"questionId":1,"title":"Tell me about your music preferences","open":true,"min":1,"reply":"I hate music, it reminds me to some old ugly situations."},{"questionId":2,"title":"Your age","open":false,"min":1,"max":1,"answers":[{"choiceId":1,"choice":"15-20"},{"choiceId":2,"choice":"20-30"},{"choiceId":3,"choice":"30-40"},{"choiceId":4,"choice":"40-50"},{"choiceId":5,"choice":"50+"}],"reply":[4]},{"questionId":3,"title":"What do you play?","open":false,"min":0,"max":7,"answers":[{"choiceId":1,"choice":"Jazz"},{"choiceId":2,"choice":" Dance"},{"choiceId":3,"choice":" House"},{"choiceId":4,"choice":" Rock"},{"choiceId":5,"choice":" Punk"},{"choiceId":6,"choice":" Classical"},{"choiceId":7,"choice":" Pop"}],"reply":[]}],"replyId":-1,"username":"Bob"}

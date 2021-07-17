@@ -1,0 +1,30 @@
+.nav-comp {
+  color: white !important;
+  text-decoration: none !important; /* Useful to remove Link undeline decoration */
+}
+
+/* !important overrides parents properties*/
+.login:hover, .logout:hover {
+  color: black !important;
+}
+
+.below-nav {
+  padding-top: 5rem;
+}
+
+.below-title {
+  padding-top: 2rem;
+}
+
+/* Some style to display footer button (creation of new questions) with more space while on a lower resolution screen */
+.panthom {
+  display: block;
+  padding: 20px;
+  height: 70px;
+  width: 100%;
+}
+
+/* Show red text if question or field is required while completing survey */
+.required {
+  color: red;
+}
